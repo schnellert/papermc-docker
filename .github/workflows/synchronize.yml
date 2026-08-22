@@ -177,7 +177,7 @@ jobs:
           platforms: |
             linux/amd64
             linux/arm64
-          push: false
+          push: true
           tags: |
             schnellert/${{ inputs.project }}:${{ matrix.tag }}
             schnellert/${{ inputs.project }}:${{ matrix.version }}
