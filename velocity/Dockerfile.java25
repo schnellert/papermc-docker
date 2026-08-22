@@ -1,0 +1,38 @@
+FROM eclipse-temurin:25.0.3_9-jre-jammy
+
+# Prepares the directories
+RUN mkdir -p /app /data \
+   && chown 1000:1000 /app /data
+
+# Sets the Velocity working data directory
+WORKDIR /data
+
+# Defines the Velocity download URL and sha256 checksum
+ARG DOWNLOAD_URL
+ARG SHA256_CHECKSUM
+
+# Downloads the Velocity JAR and verifies its checksum
+ADD \
+   --checksum=${SHA256_CHECKSUM} \
+   --chown=1000:1000 \
+   ${DOWNLOAD_URL} \
+   /app/velocity.jar
+
+# Runs Velocity as an unprivileged user
+USER 1000:1000
+
+# Sets the default JVM options
+ENV JAVA_TOOL_OPTIONS="-Xms2G -Xmx2G"
+
+# Stops Velocity gracefully so the data is saved before exit
+STOPSIGNAL SIGTERM
+
+# Exposes the default port
+EXPOSE 25565
+
+# Periodically checks whether Velocity is accepting connections
+HEALTHCHECK --interval=30s --start-period=60s --timeout=5s \
+   CMD bash -c 'echo > /dev/tcp/127.0.0.1/25565'
+
+# Starts the Velocity instance
+ENTRYPOINT ["java", "-jar", "/app/velocity.jar"]
