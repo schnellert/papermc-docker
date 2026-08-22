@@ -4,6 +4,14 @@ Docker images for PaperMC distributions, built automatically from official Paper
 
 Lightweight and ready for Docker, Docker Compose, Docker Swarm, Kubernetes and any other OCI-compatible runtime.
 
+## 📦 Available Images
+
+- [schnellert/folia](https://hub.docker.com/r/schnellert/folia)
+
+## 📖 Documentation
+
+- [Folia](folia/README.md)
+
 ## 🤝 Contributing
 
 Contributions are welcome.
