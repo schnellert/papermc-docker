@@ -7,10 +7,12 @@ Lightweight and ready for Docker, Docker Compose, Docker Swarm, Kubernetes and a
 ## 📦 Available Images
 
 - [schnellert/folia](https://hub.docker.com/r/schnellert/folia)
+- [schnellert/paper](https://hub.docker.com/r/schnellert/paper)
 
 ## 📖 Documentation
 
 - [Folia](folia/README.md)
+- [Paper](paper/README.md)
 
 ## 🤝 Contributing
 

@@ -1,0 +1,17 @@
+name: Synchronize Paper
+
+on:
+  schedule:
+    - cron: '0 0 * * FRI'
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  synchronize:
+    secrets: inherit
+    uses: ./.github/workflows/synchronize.yml
+    with:
+      project: paper
