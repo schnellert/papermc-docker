@@ -8,11 +8,13 @@ Lightweight and ready for Docker, Docker Compose, Docker Swarm, Kubernetes and a
 
 - [schnellert/folia](https://hub.docker.com/r/schnellert/folia)
 - [schnellert/paper](https://hub.docker.com/r/schnellert/paper)
+- [schnellert/velocity](https://hub.docker.com/r/schnellert/velocity)
 
 ## 📖 Documentation
 
 - [Folia](folia/README.md)
 - [Paper](paper/README.md)
+- [Velocity](velocity/README.md)
 
 ## 🤝 Contributing
 
