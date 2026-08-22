@@ -1,0 +1,39 @@
+FROM eclipse-temurin:8u492-b09-jre-jammy
+
+# Prepares the directories
+RUN mkdir -p /app /data \
+   && chown 1000:1000 /app /data
+
+# Sets the Paper working data directory
+WORKDIR /data
+
+# Defines the Paper download URL and sha256 checksum
+ARG DOWNLOAD_URL
+ARG SHA256_CHECKSUM
+
+# Downloads the Paper JAR and verifies its checksum
+ADD \
+   --checksum=${SHA256_CHECKSUM} \
+   --chown=1000:1000 \
+   ${DOWNLOAD_URL} \
+   /app/paper.jar
+
+# Runs Paper as an unprivileged user
+USER 1000:1000
+
+# Requires explicit EULA acceptance and sets the default JVM options 
+ENV ACCEPT_EULA=false \
+    JAVA_TOOL_OPTIONS="-Xms2G -Xmx2G"
+
+# Stops Paper gracefully so the data is saved before exit
+STOPSIGNAL SIGTERM
+
+# Exposes the default port
+EXPOSE 25565
+
+# Periodically checks whether Paper is accepting connections
+HEALTHCHECK --interval=30s --start-period=60s --timeout=5s \
+   CMD bash -c 'echo > /dev/tcp/127.0.0.1/25565'
+
+# Writes eula.txt from ACCEPT_EULA then starts the Paper instance
+ENTRYPOINT bash -c 'echo "eula=${ACCEPT_EULA}" > /data/eula.txt && exec java -jar /app/paper.jar nogui'
