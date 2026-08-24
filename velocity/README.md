@@ -18,9 +18,9 @@ Pin `<version>-build.<n>` for reproducible deployments; use `<version>` to follo
 
 ## ⚙️ Configuration
 
-| Variable            | Description                                                   | Default         |
-|---------------------|---------------------------------------------------------------|-----------------|
-| `JAVA_TOOL_OPTIONS` | JVM options.                                                  | `-Xms2G -Xmx2G` |
+| Variable            | Description                                                   | Default           |
+|---------------------|---------------------------------------------------------------|-------------------|
+| `JAVA_TOOL_OPTIONS` | JVM options.                                                  | `-Xms512M -Xmx1G` |
 
 Persistent data lives in `/data`. The container runs on a non-root user (**UID 1000**), so the mounted host directory must be writable by that user.
 

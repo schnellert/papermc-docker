@@ -22,7 +22,7 @@ ADD \
 USER 1000:1000
 
 # Sets the default JVM options
-ENV JAVA_TOOL_OPTIONS="-Xms2G -Xmx2G"
+ENV JAVA_TOOL_OPTIONS="-Xms512M -Xmx1G"
 
 # Stops Velocity gracefully so the data is saved before exit
 STOPSIGNAL SIGTERM
