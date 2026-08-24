@@ -3,6 +3,9 @@ name: Synchronize
 on:
   workflow_call:
     inputs:
+      force:
+        required: true
+        type: boolean
       project:
         required: true
         type: string
@@ -30,14 +33,17 @@ jobs:
         id: detect-changes
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
+          FORCE: ${{ inputs.force }}
           PROJECT: ${{ inputs.project }}
         with:
           script: |
             const fs        = require('fs');
+
+            const force     = process.env.FORCE === 'true';
             const project   = process.env.PROJECT;
-            const namespace = 'schnellert';
 
             const FILL_API_BASE_URL  = 'https://fill.papermc.io/v3';
+            const namespace = 'schnellert';
 
             const fetchJson = async (url, label) => {
               const res = await fetch(url);
@@ -89,12 +95,14 @@ jobs:
               const tag       = `${version}-build.${build.id}`;
               const reference = `docker.io/${namespace}/${project}:${tag}`;
 
-              const { exitCode } = await exec.getExecOutput(
-                'docker', ['buildx', 'imagetools', 'inspect', reference],
-                { ignoreReturnCode: true, silent: true },
-              );
-              if (exitCode === 0) {
-                continue;
+              if (!force) {
+                const { exitCode } = await exec.getExecOutput(
+                  'docker', ['buildx', 'imagetools', 'inspect', reference],
+                  { ignoreReturnCode: true, silent: true },
+                );
+                if (exitCode === 0) {
+                  continue;
+                }
               }
 
               const asset = build.downloads['server:default'];

@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 0 * * FRI'
   workflow_dispatch:
+    inputs:
+      force:
+        default: false
+        description: Force build all Folia images
+        type: boolean
 
 concurrency:
   cancel-in-progress: true
@@ -14,4 +19,5 @@ jobs:
     secrets: inherit
     uses: ./.github/workflows/synchronize.yml
     with:
+      force: ${{ inputs.force || false }}
       project: folia
