@@ -158,7 +158,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Login to Docker Hub
+      - name: Authenticate with GHCR
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: schnellert
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Authenticate with Docker Hub
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
           username: schnellert
@@ -187,5 +194,7 @@ jobs:
             linux/arm64
           push: true
           tags: |
+            ghcr.io/${{ github.repository }}/${{ inputs.project }}:${{ matrix.tag }}
+            ghcr.io/${{ github.repository }}/${{ inputs.project }}:${{ matrix.version }}
             schnellert/${{ inputs.project }}:${{ matrix.tag }}
             schnellert/${{ inputs.project }}:${{ matrix.version }}

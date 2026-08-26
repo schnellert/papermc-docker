@@ -18,6 +18,10 @@ jobs:
   synchronize:
     secrets: inherit
     uses: ./.github/workflows/synchronize.yml
+    permissions:
+      contents: read
+      packages: write
+
     with:
       force: ${{ inputs.force || false }}
       project: velocity
