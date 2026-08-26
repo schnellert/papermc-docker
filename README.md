@@ -1,4 +1,4 @@
-# papermc-docker
+# PaperMC Docker Images
 
 Docker images for PaperMC distributions, built automatically from official PaperMC releases.
 

@@ -1,9 +1,12 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.base.schema.json",
-  "name": "papermc-docker",
+  "name": "papermc-docker-images",
   "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu-24.04",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:4": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers-extra/features/mise:1": {
       "version": "latest"
     }
   },
