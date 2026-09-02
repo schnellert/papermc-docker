@@ -2,7 +2,7 @@ name: Synchronize Paper
 
 on:
   schedule:
-    - cron: '0 0 * * FRI'
+    - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
       force:
@@ -14,14 +14,14 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   synchronize:
     secrets: inherit
     uses: ./.github/workflows/synchronize.yml
-    permissions:
-      contents: read
-      packages: write
-
     with:
       force: ${{ inputs.force || false }}
       project: paper
